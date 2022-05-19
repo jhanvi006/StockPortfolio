@@ -7,21 +7,29 @@ public class StockPortfolio {
     public static void getStockDetails(){
         System.out.println("Enter number of stocks: ");
         int n = sc.nextInt();
-        String shareName;
-        int noOfShares;
-        double sharePrice = 0.0, stockValue = 0.0, totalStockValue = 0.0;
-        for (int i = 1; i <= n; i++) {
+        String shareName[] = new String[n];
+        int noOfShares[] = new int[n];
+        double sharePrice[] = new double[n];
+        for (int i = 0; i < n; i++) {
             System.out.println("Enter Share Name: ");
-            shareName = sc.next();
+            shareName[i] = sc.next();
             System.out.println("Enter number of Shares: ");
-            noOfShares = sc.nextInt();
+            noOfShares[i] = sc.nextInt();
             System.out.println("Enter Share Price: ");
-            sharePrice = sc.nextDouble();
-            stockValue = calculateStockValue(noOfShares, sharePrice);
-            System.out.println("Stock value for Share"+i+", "+shareName+" is "+stockValue);
+            sharePrice[i] = sc.nextDouble();
+        }
+        createStockReports(n, shareName, noOfShares, sharePrice);
+    }
+    public static void createStockReports(int noOfStocks, String[] shareName, int[] noOfShares, double[] sharePrice){
+        System.out.println("-------------STOCKS REPORT-------------");
+        System.out.println("StockNo. ShareName NoOfShares SharePrice StockValue");
+        double stockValue, totalStockValue = 0.0;
+        for (int i = 0; i < noOfStocks; i++) {
+            stockValue = calculateStockValue(noOfShares[i], sharePrice[i]);
+            System.out.println(" "+(i+1)+".\t\t"+shareName[i]+"\t\t"+noOfShares[i]+"\t\t"+sharePrice[i]+"\t\t"+stockValue);
             totalStockValue += stockValue;
         }
-        System.out.println("Total stock value is "+totalStockValue);
+        System.out.println("\nTotal Stock Value is "+totalStockValue);
     }
     public static double calculateStockValue(int noOfShares, double sharePrice){
         return noOfShares*sharePrice;
